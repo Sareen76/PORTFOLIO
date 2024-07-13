@@ -1,179 +1,52 @@
-import { React, useEffect, useState } from 'react'
-import './Header.css'
-import './Header.js'
-import Lists from './Header.js'
-import { Link } from 'react-router-dom'
-import { API } from '../../api/Api.js'
+import { React, useContext, useEffect, useState } from "react";
+import { FaLinkedin } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 
-function Header() {
+import { DataContext } from "../../context/DataProvider";
+import Sun from '../../assets/sun-of-may.gif'
+import Moon from '../../assets/night-mode.gif'
+import '../../index.css'
 
-  // const [activeList, setActiveList] = useState({ list1: null, list2: null, list3: null, list4: null, list5: null, list6: null });
+import { darkModeBackgroud} from '../../constants/backgroud.js'
+import { lightModeBackgroud} from '../../constants/backgroud.js'
 
-  // const handleClick = (list, index) => {
-  //   setActiveList((prevState) => ({
-  //     ...prevState,
-  //     [list]: index
-  //   }));
-  // };
-
-
-
-  // useEffect(() => {
-  //   $(function() {
-  //     // Event delegation to handle click on dynamically added elements
-  //     $(document).on('click', '.menu > ul > li', function(e) {
-  //       e.preventDefault(); // Prevent default action
-  //       $(this).siblings().removeClass("active");
-  //       $(this).toggleClass("active");
-  //       $(this).find("ul").slideToggle();
-  //       $(this).siblings().find("ul").slideUp();
-  //       $(this).siblings().find("ul").find("li").removeClass("active");
-  //       $(this).click(console.log("Clicked"+`${this}`))
-  //     });
-  //   });
-  // }, []);
-
-  const [personalDetails, setPersonalDetails] = useState({});
-
-
-  const getPersonalData = async () => {
-    try {
-      const res = await API.personalDetails();
-      const data = JSON.parse(res.data.personalInfo);
-      setPersonalDetails(data[0])
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getPersonalData();
-  }, [])
+const Header = () => {
+  const { mode, toggleTheme } = useContext(DataContext);
 
   return (
-    <div>
-      { personalDetails?.selfDetails && 
-      <div className="container"> 
-        <div className="sidebar">
-          <div className="head">
-            <div className="user-img">
-              <img src="https://cdn-icons-png.flaticon.com/512/2920/2920244.png" alt="-img" />
-            </div>
-            <div className="user-details">
-              <p className="title">Web Developer</p>{personalDetails.selfDetails.name}<p className="name">{}</p>
-            </div>
-          </div>
-
-          <div className="nav">
-            <div className="menu">
-              <p className="title">Main</p>
-              <ul>
-                {Lists.map((item, index) => {
-                  return (
-                    <li key={index} className={item.cName}>
-                      <Link to={item.path}>
-                        <i className={item.icon}></i>
-                        <span className="{item.spanCName}">{item.title}</span>
-                      </Link>
-                    </li>
-                  )
-                })}
-
-                {/* <li className="" name="Dashboard">
-                  <a href="#">
-                    <i className="icon ph-bold ph-house-simple"></i>
-                    <span className="text">Dashboard</span>
-                  </a>
-                </li>
-
-                <li className="" name="Audience">
-                  <a href="#">
-                    <i className="icon ph-bold ph-house-user"></i>
-                    <span className="text">Audience</span>
-                    <i className="arrow ph-bold ph-caret-down"></i>
-                  </a>
-                  <ul className="sub-menu">
-                    <li name="Earnings">
-                      <a href="#">
-                        <span className="text">Earnings</span>
-                      </a>
-                    </li>
-                    <li name="Funds">
-                      <a href="#">
-                        <span className="text">Funds</span>
-                      </a>
-                    </li>
-                    <li name="Declines">
-                      <a href="#">
-                        <span className="text">Declines</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className="" name="Posts">
-                  <a href="#">
-                    <i className="icon ph-bold ph-file-text"></i>
-                    <span className="text">Posts</span>
-                  </a>
-                </li>
-
-                <li className="" name="Schedules">
-                  <a href="#">
-                    <i className="icon ph-bold ph-calendar-blank"></i>
-                    <span className="text">Schedules</span>
-                  </a>
-                </li>
-
-                <li className="" name="Income">
-                  <a href="#">
-                    <i className="icon ph-bold ph-house-user"></i>
-                    <span className="text">Income</span>
-                    <i className="arrow ph-bold ph-caret-down"></i>
-                  </a>
-                  <ul className="sub-menu">
-                    <li name="earnings">
-                      <a href="#">
-                        <span className="text">earnings</span>
-                      </a>
-                    </li>
-                    <li name="Funds">
-                      <a href="#">
-                        <span className="text">Funds</span>
-                      </a>
-                    </li>
-                    <li name="Declines">
-                      <a href="#">
-                        <span className="text">Declines</span>
-                      </a>
-                    </li>
-                    <li name="Payouts">
-                      <a href="#">
-                        <span className="text">Payouts</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li> */}
-              </ul>
-            </div>
-
-            <div className="menu">
-              <p className="title">Settings</p>
-              <ul>
-                <li className="" name="Settings">
-                  <a href="#">
-                    <i className="icon ph-bold ph-gear"></i>
-                    <span className="text">Settings</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-col justify-between px-2 py-2 min-h-full" style={mode === 'dark' ? darkModeBackgroud : lightModeBackgroud}>
+      <h1 className="text-3xl font-bold text-center"> LOGO</h1>
+      <div className="flex flex-col items-center gap-3 text-3xl">
+        <span className="p-1 flex flex-row gap-3 items-center group">
+          <FaLinkedin className="hover:scale-125 transition-transform duration-300 " />
+          <label htmlFor="@" className="mb-1 absolute ml-10 font-medium text-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"> Linkedin</label>
+        </span>
+        <span className="p-1 flex flex-row gap-3 items-center group">
+          <FaGithub className="hover:scale-125 transition-transform duration-300" />
+          <label htmlFor="@" className="mb-1 absolute ml-10 font-medium text-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"> GitHub </label>
+        </span>
+        <span className="p-1 flex flex-row gap-3 items-center group">
+          <FaTwitter className="hover:scale-125 transition-transform duration-300" />
+          <label htmlFor="@" className="mb-1 absolute ml-10 font-medium text-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"> Twitter</label>
+        </span>
+        <span className="p-1 flex flex-row gap-3 items-center group">
+          <FaInstagram className="hover:scale-125 transition-transform duration-300" />
+          <label htmlFor="@" className="mb-1 absolute ml-10 font-medium text-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"> Instagram</label>
+        </span>
       </div>
-  }
-    </div>
-  )
-}
 
-export default Header
+      <div className="darkModeLightMode flex justify-center pb-4">
+        <button
+          onClick={ toggleTheme }
+          className="bg-white text-black font-bold rounded-full h-10 w-10"
+        >
+          {mode === "dark" ? <img src={Moon} alt="D" className={`h-10 w-10 rounded-full`}/> : <img src={Sun} alt="L" className={`h-10 w-10 rounded-full`}/>}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Header;

@@ -1,42 +1,29 @@
-import React from 'react'
-import Header from '../Header/Header.jsx'
-import { Outlet } from 'react-router-dom'
-import Footer from '../Footer/Footer'
+import React, { useContext } from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
 
 const container = {
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100vh',
-  width: '100vw'
-}
-
-const main = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100vw',
-  padding: '20px',
-  columnGap: '20px'
-}
-
-const sideTerminal = {
-  width: 'calc(100vw - 256px)',
-  position: 'relative',
-  left: ''
-}
+  height: "auto",
+  width: "100vw",
+  // backgroundColor: '#000000'
+  backgroundColor: "cyan"
+};
 
 function Layout() {
   return (
     <div style={container}>
-      <main style={main}>
+      <header className="header w-40 bg-gray-200 h-full fixed top-0 left-0">
         <Header />
-        <article className='sideTerminal' style={sideTerminal}>
+      </header>
+      <main className="main flex-1 ml-40 mr-40 overflow-hidden " style={{ width: `calc(100% - 320px)`}}>
           <Outlet />
-          <Footer />
-        </article>
       </main>
+      <footer className="footer w-40 bg-gray-200 h-full fixed top-0 right-0">
+        <Footer />
+      </footer>
     </div>
-  )
+  );
 }
 
-export default Layout
+export default Layout;
